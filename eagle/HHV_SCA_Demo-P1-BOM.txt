@@ -1,0 +1,17 @@
+Qty Value        Device       Package      Parts                   Description                
+1                R-EU_R0603   R0603        FB1                     FERRITE BEAD
+2   27           R-US_R0402   R0402        R7, R8                  RESISTOR
+4   100          R-US_R0603   R0603        R5, R6, R9, R10         RESISTOR
+4   10k          R-US_R0603   R0603        R1, R2, R3, R4          RESISTOR
+1   10nF         C-EUC0603K   C0603K       C4                      CAPACITOR
+3   .1uF         C-EUC0603K   C0603K       C1, C2, C5              CAPACITOR
+1   4.7uF        C-EUC0603K   C0603K       C3                      CAPACITOR
+1   AOZ8105CI    AOZ8105CI    SOT23-6L     U3                      TVS
+1                FE06-1       FE06         CN3                     FEMALE HEADER              
+1                MA05-2       MA05-2       CN2                     PIN HEADER                 
+1   FT230XS      FT230XS      SSOP16       U2                      USB to BASIC UART IC       
+1   MINIUSB-SMD  MINIUSB-SMD  MINIUSB-SMD  CN1                     EDAC 690-005-299-043       
+1   PIC12F1572   PIC12F1571   DIL8         U1                      PIC12F1571/2               
+2   RED          LED3MM       LED3MM       D2, D3                  LED                        
+2   GRN          LED3MM       LED3MM       D1, D4                  LED                        
+5                10-XX        B3F-10XX     SW1, SW2, SW3, SW4, SW5 OMRON SWITCH               
