@@ -9136,10 +9136,10 @@ W = angled&lt;p&gt;
 </part>
 <part name="VSS2" library="supply1" deviceset="VSS" device=""/>
 <part name="CN3" library="con-lsta" deviceset="FE06-1" device="" value="CON"/>
-<part name="S1" library="switch-omron" deviceset="10-XX" device=""/>
-<part name="S2" library="switch-omron" deviceset="10-XX" device=""/>
-<part name="S3" library="switch-omron" deviceset="10-XX" device=""/>
-<part name="S4" library="switch-omron" deviceset="10-XX" device=""/>
+<part name="SW1" library="switch-omron" deviceset="10-XX" device=""/>
+<part name="SW2" library="switch-omron" deviceset="10-XX" device=""/>
+<part name="SW3" library="switch-omron" deviceset="10-XX" device=""/>
+<part name="SW4" library="switch-omron" deviceset="10-XX" device=""/>
 <part name="R2" library="rcl" deviceset="R-US_" device="R0603" value="10k"/>
 <part name="R3" library="rcl" deviceset="R-US_" device="R0603" value="10k"/>
 <part name="R4" library="rcl" deviceset="R-US_" device="R0603" value="10k"/>
@@ -9167,15 +9167,15 @@ W = angled&lt;p&gt;
 <part name="C4" library="rcl" deviceset="C-EU" device="C0603K" value="10nF"/>
 <part name="VSS12" library="supply1" deviceset="VSS" device=""/>
 <part name="C5" library="rcl" deviceset="C-EU" device="C0603K" value=".1uF"/>
-<part name="D3" library="led" deviceset="LED" device="3MM"/>
-<part name="D4" library="led" deviceset="LED" device="3MM"/>
+<part name="D3" library="led" deviceset="LED" device="3MM" value="RED"/>
+<part name="D4" library="led" deviceset="LED" device="3MM" value="GRN"/>
 <part name="R9" library="rcl" deviceset="R-US_" device="R0603" value="100"/>
 <part name="R10" library="rcl" deviceset="R-US_" device="R0603" value="100"/>
-<part name="D1" library="led" deviceset="LED" device="3MM"/>
-<part name="D2" library="led" deviceset="LED" device="3MM"/>
+<part name="D1" library="led" deviceset="LED" device="3MM" value="GRN"/>
+<part name="D2" library="led" deviceset="LED" device="3MM" value="RED"/>
 <part name="CN2" library="con-lstb" deviceset="MA05-2" device=""/>
 <part name="U1" library="cuslibrary" deviceset="PIC12F1571" device="" value="PIC12F1572"/>
-<part name="S5" library="switch-omron" deviceset="10-XX" device="" value="3"/>
+<part name="SW5" library="switch-omron" deviceset="10-XX" device=""/>
 <part name="VSS13" library="supply1" deviceset="VSS" device=""/>
 <part name="C1" library="rcl" deviceset="C-EU" device="C0603K" value=".1uF"/>
 <part name="U$1" library="cuslibrary" deviceset="KBELOGO-SILK" device=""/>
@@ -9195,13 +9195,6 @@ W = angled&lt;p&gt;
 <text x="60.96" y="190.5" size="1.778" layer="97" ratio="15">Place near U2, pin 10</text>
 <text x="50.165" y="52.07" size="1.778" layer="97" ratio="15">CN1</text>
 <text x="50.8" y="33.02" size="1.778" layer="97" ratio="15">USB Mini B</text>
-<text x="40.64" y="96.52" size="1.778" layer="97" ratio="15">NOTE! May need to
-swap these pins
-depending on layout!</text>
-<text x="101.6" y="185.42" size="1.27" layer="97" ratio="15" rot="R90">Red</text>
-<text x="111.76" y="185.42" size="1.27" layer="97" ratio="15" rot="R90">Green</text>
-<text x="175.26" y="185.42" size="1.27" layer="97" ratio="15" rot="R270">Red</text>
-<text x="165.1" y="185.42" size="1.27" layer="97" ratio="15" rot="R270">Green</text>
 <text x="142.24" y="157.48" size="2.54" layer="97" ratio="15">PICkit 3</text>
 <text x="243.84" y="185.42" size="1.778" layer="97" ratio="15">Place near U1, pin 1</text>
 <text x="20.32" y="198.12" size="5.08" layer="94" ratio="15">USB Serial Interface</text>
@@ -9233,10 +9226,10 @@ Cut to disconnect from ICSP if needed</text>
 </instance>
 <instance part="VSS2" gate="G$1" x="254" y="162.56"/>
 <instance part="CN3" gate="G$1" x="144.78" y="142.24"/>
-<instance part="S1" gate="1" x="116.84" y="83.82" rot="R270"/>
-<instance part="S2" gate="1" x="116.84" y="68.58" rot="R270"/>
-<instance part="S3" gate="1" x="116.84" y="53.34" rot="R270"/>
-<instance part="S4" gate="1" x="116.84" y="38.1" rot="R270"/>
+<instance part="SW1" gate="1" x="116.84" y="83.82" rot="R270"/>
+<instance part="SW2" gate="1" x="116.84" y="68.58" rot="R270"/>
+<instance part="SW3" gate="1" x="116.84" y="53.34" rot="R270"/>
+<instance part="SW4" gate="1" x="116.84" y="38.1" rot="R270"/>
 <instance part="R2" gate="G$1" x="109.22" y="76.2" rot="R90"/>
 <instance part="R3" gate="G$1" x="109.22" y="60.96" rot="R90"/>
 <instance part="R4" gate="G$1" x="109.22" y="45.72" rot="R90"/>
@@ -9272,7 +9265,7 @@ Cut to disconnect from ICSP if needed</text>
 <instance part="D2" gate="G$1" x="177.8" y="190.5" rot="MR0"/>
 <instance part="CN2" gate="G$1" x="220.98" y="73.66"/>
 <instance part="U1" gate="G$1" x="233.68" y="167.64"/>
-<instance part="S5" gate="1" x="193.04" y="144.78" rot="R270"/>
+<instance part="SW5" gate="1" x="193.04" y="144.78" rot="R270"/>
 <instance part="VSS13" gate="G$1" x="200.66" y="137.16" rot="MR0"/>
 <instance part="C1" gate="G$1" x="254" y="172.72"/>
 <instance part="U$1" gate="G$1" x="157.48" y="17.78"/>
@@ -9311,8 +9304,8 @@ Cut to disconnect from ICSP if needed</text>
 <label x="210.82" y="172.72" size="1.27" layer="95" ratio="15" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="S5" gate="1" pin="P1"/>
-<pinref part="S5" gate="1" pin="P"/>
+<pinref part="SW5" gate="1" pin="P1"/>
+<pinref part="SW5" gate="1" pin="P"/>
 <wire x1="187.96" y1="142.24" x2="187.96" y2="144.78" width="0.1524" layer="91"/>
 <wire x1="187.96" y1="144.78" x2="185.42" y2="144.78" width="0.1524" layer="91"/>
 <junction x="187.96" y="144.78"/>
@@ -9396,37 +9389,37 @@ Cut to disconnect from ICSP if needed</text>
 <label x="154.94" y="142.24" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="S4" gate="1" pin="S1"/>
+<pinref part="SW4" gate="1" pin="S1"/>
 <wire x1="124.46" y1="33.02" x2="124.46" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="35.56" x2="121.92" y2="35.56" width="0.1524" layer="91"/>
-<pinref part="S4" gate="1" pin="S"/>
+<pinref part="SW4" gate="1" pin="S"/>
 <wire x1="121.92" y1="35.56" x2="121.92" y2="38.1" width="0.1524" layer="91"/>
 <junction x="121.92" y="35.56"/>
 <pinref part="VSS3" gate="G$1" pin="VSS"/>
 </segment>
 <segment>
-<pinref part="S3" gate="1" pin="S1"/>
+<pinref part="SW3" gate="1" pin="S1"/>
 <wire x1="124.46" y1="48.26" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="50.8" x2="121.92" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="S3" gate="1" pin="S"/>
+<pinref part="SW3" gate="1" pin="S"/>
 <wire x1="121.92" y1="50.8" x2="121.92" y2="53.34" width="0.1524" layer="91"/>
 <junction x="121.92" y="50.8"/>
 <pinref part="VSS4" gate="G$1" pin="VSS"/>
 </segment>
 <segment>
-<pinref part="S2" gate="1" pin="S1"/>
+<pinref part="SW2" gate="1" pin="S1"/>
 <wire x1="124.46" y1="63.5" x2="124.46" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="66.04" x2="121.92" y2="66.04" width="0.1524" layer="91"/>
-<pinref part="S2" gate="1" pin="S"/>
+<pinref part="SW2" gate="1" pin="S"/>
 <wire x1="121.92" y1="66.04" x2="121.92" y2="68.58" width="0.1524" layer="91"/>
 <junction x="121.92" y="66.04"/>
 <pinref part="VSS5" gate="G$1" pin="VSS"/>
 </segment>
 <segment>
-<pinref part="S1" gate="1" pin="S1"/>
+<pinref part="SW1" gate="1" pin="S1"/>
 <wire x1="124.46" y1="78.74" x2="124.46" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="81.28" x2="121.92" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="S1" gate="1" pin="S"/>
+<pinref part="SW1" gate="1" pin="S"/>
 <wire x1="121.92" y1="81.28" x2="121.92" y2="83.82" width="0.1524" layer="91"/>
 <junction x="121.92" y="81.28"/>
 <pinref part="VSS6" gate="G$1" pin="VSS"/>
@@ -9510,8 +9503,8 @@ Cut to disconnect from ICSP if needed</text>
 <pinref part="VSS9" gate="G$1" pin="VSS"/>
 </segment>
 <segment>
-<pinref part="S5" gate="1" pin="S"/>
-<pinref part="S5" gate="1" pin="S1"/>
+<pinref part="SW5" gate="1" pin="S"/>
+<pinref part="SW5" gate="1" pin="S1"/>
 <wire x1="198.12" y1="144.78" x2="198.12" y2="142.24" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="142.24" x2="198.12" y2="142.24" width="0.1524" layer="91"/>
 <junction x="198.12" y="142.24"/>
@@ -9521,8 +9514,8 @@ Cut to disconnect from ICSP if needed</text>
 </net>
 <net name="N$1" class="0">
 <segment>
-<pinref part="S4" gate="1" pin="P1"/>
-<pinref part="S4" gate="1" pin="P"/>
+<pinref part="SW4" gate="1" pin="P1"/>
+<pinref part="SW4" gate="1" pin="P"/>
 <wire x1="111.76" y1="35.56" x2="111.76" y2="38.1" width="0.1524" layer="91"/>
 <pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="111.76" y1="38.1" x2="109.22" y2="38.1" width="0.1524" layer="91"/>
@@ -9533,9 +9526,9 @@ Cut to disconnect from ICSP if needed</text>
 <net name="N$2" class="0">
 <segment>
 <pinref part="R4" gate="G$1" pin="2"/>
-<pinref part="S3" gate="1" pin="P1"/>
+<pinref part="SW3" gate="1" pin="P1"/>
 <wire x1="109.22" y1="50.8" x2="111.76" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="S3" gate="1" pin="P"/>
+<pinref part="SW3" gate="1" pin="P"/>
 <wire x1="111.76" y1="50.8" x2="111.76" y2="53.34" width="0.1524" layer="91"/>
 <junction x="111.76" y="50.8"/>
 <pinref part="R3" gate="G$1" pin="1"/>
@@ -9547,9 +9540,9 @@ Cut to disconnect from ICSP if needed</text>
 <net name="N$5" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="2"/>
-<pinref part="S2" gate="1" pin="P1"/>
+<pinref part="SW2" gate="1" pin="P1"/>
 <wire x1="109.22" y1="66.04" x2="111.76" y2="66.04" width="0.1524" layer="91"/>
-<pinref part="S2" gate="1" pin="P"/>
+<pinref part="SW2" gate="1" pin="P"/>
 <wire x1="111.76" y1="66.04" x2="111.76" y2="68.58" width="0.1524" layer="91"/>
 <junction x="111.76" y="66.04"/>
 <pinref part="R2" gate="G$1" pin="1"/>
@@ -9768,9 +9761,9 @@ Cut to disconnect from ICSP if needed</text>
 </segment>
 <segment>
 <pinref part="R2" gate="G$1" pin="2"/>
-<pinref part="S1" gate="1" pin="P1"/>
+<pinref part="SW1" gate="1" pin="P1"/>
 <wire x1="109.22" y1="81.28" x2="111.76" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="S1" gate="1" pin="P"/>
+<pinref part="SW1" gate="1" pin="P"/>
 <wire x1="111.76" y1="81.28" x2="111.76" y2="83.82" width="0.1524" layer="91"/>
 <junction x="111.76" y="81.28"/>
 <pinref part="R1" gate="G$1" pin="1"/>
