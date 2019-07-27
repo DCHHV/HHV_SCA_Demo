@@ -1,0 +1,6 @@
+stage_2_text
+Stage 2:\r\n
+This is a naive attempt at preventing a time SCA. After all digits are input,\r\n
+they are checked. Incorrect digits are noted, but does not fail instantly.\r\n
+This results in a different behavior, but info is still leaked via time.\r\n
+Hint: This PIC is running at 1 MHz

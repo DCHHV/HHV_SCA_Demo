@@ -1,0 +1,3 @@
+completed_text
+Congratulations! You got through all stages of this challenge!\r\n
+If you love making puzzles, please consider volunteering your time in the HHV!
