@@ -11,7 +11,7 @@ The digits of the PIN are connected to a single analog input of the PIC. Between
 
 The red and green LEDs for the PIN input are connected to a 2x5 0.1" female header. A USBee AX PRO can be directly connected to this input. The LEDs are then connected to D0 and D1 of the logic analyzer. This logic analyzer is compatible with `sigrok`/`pulseview`, it is not a Saleae clone. Any other 3.3 V compatible logic analyzers can be used instead; it was highly convenient to use this pinout as the HHV has a stock of the USBee logic analyzers.
 
-A full breakdown of each stage, how the vulnerability works, step by step instructions, and proper mitigation techniques for this specific setup, are available in `docs/writeup.md`
+A full breakdown of each stage, how the vulnerability works, step by step instructions, and proper mitigation techniques for this specific setup, are available in `docs/README.md`
 
 ## Setup
 There is a specific order to the following steps, this is due to `pulseview` recognizing the FTDI device and attempting to utilize it as a logic analyzer interface. Doing this in any other order is possible but it becomes a hassle as `pulseview` tries to consume the USB serial device, even if it is already open in some cases.
