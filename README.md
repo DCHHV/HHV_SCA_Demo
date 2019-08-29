@@ -11,6 +11,8 @@ The digits of the PIN are connected to a single analog input of the PIC. Between
 
 The red and green LEDs for the PIN input are connected to a 2x5 0.1" female header. A USBee AX PRO can be directly connected to this input. The LEDs are then connected to D0 and D1 of the logic analyzer. This logic analyzer is compatible with `sigrok`/`pulseview`, it is not a Saleae clone. Any other 3.3 V compatible logic analyzers can be used instead; it was highly convenient to use this pinout as the HHV has a stock of the USBee logic analyzers.
 
+Note that we have observed that some models of Saleae clones actually work better in `pulseview` than the official Logic software. This may be due to a number of reasons, but it was found that in the Logic software both for Windows and Linux, a Saleae clone would often fail to run at 16 MHz. This failure was followed up with a comment to lower the sample rate and try again. Under `pulseview` for both Windows and Linux however, this device performed at the 16 MHz sample rate quite reliably. The USBee AX PRO is not a Saleae clone; this observervation is provided as a reference for using other logic analyzers.
+
 A full breakdown of each stage, how the vulnerability works, step by step instructions, and proper mitigation techniques for this specific setup, are available in `docs/README.md`
 
 ## Setup
@@ -21,3 +23,11 @@ There is a specific order to the following steps, this is due to `pulseview` rec
 3. Connect the FTDI USB serial cable
 4. Open a serial terminal to the just created USB terminal at 9600 baud, 8n1.
 5. Press "RESET" button on the HHV SCA Demo board; text should appear on the terminal
+
+
+## Build your own
+All of the PCB sources for EagleCAD are available in the `eagle/` directory. The Gerber files are available in the `eagle/out/` directory and are named directly for use with OSHPark. Simply zip up the files and upload them. The Gerber files are also compatible with pretty much every PCB manufacturer as-is. A full BOM is also in the `eagle/` directory.
+
+The PIC _can_ be programmed via the on-board ICSP header by connecting a PICKit device which supports PIC12F1572. However, we do not recommend connecting directly to this and instead recommend programming the microcontroller out of circuit. Due to conflicting driving signals, there are two marked pads that must be cut for ICSP operation. These must be bridged back together for normal operation.
+
+The `HHV_SCA_Demo-production.hex` file can be directly written to the PIC12F1572.
