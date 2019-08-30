@@ -67,16 +67,16 @@ stage_3_loop:
     XORWF   INDF1, W;
 
     /* Start critical section */
-    BTFSS   STATUS, 2;		//2 cycles if true, 1 if false. Bit 2 is Z
+    BTFSS   STATUS, 2;		//2 cycles if Zero is set, 1 if not. Bit 2 is Z
     GOTO    no_match;		//2 cycles always
-match:				//From BTFSC, it takes 2 cycles to get here.
+match:				//From BTFSS, it takes 2 cycles to get here.
     GOTO    check_loop;		//2 cycles always
             
-no_match:			//From BTFSC, it takes 3 cycles to get here.
+no_match:			//From BTFSS, it takes 3 cycles to get here.
     INCF    _cmp, F;		//1 cycle
     /* End critical section */
 
-check_loop:			//From BTFSC, both paths take 4 cycles to here.
+check_loop:			//From BTFSS, both paths take 4 cycles to here.
     CLRW;
     XORWF   _loop, W;
     BTFSC   STATUS, 2;		//2 cycles if true, 1 if false. Bit 2 is Z
