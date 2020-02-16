@@ -20,7 +20,7 @@ There is a specific order to the following steps, this is due to `pulseview` rec
 
 1. Connect the USBee AX PRO to the host computer
 2. Open `pulseview`. The tool should automatically detect and initialize the logic analyzer, if not, it can be manually set up by scanning for 'fx2lafw' devices. Note that on Linux based systems, there is a separate firmware package for the 'fx2lafw' firmware files.
-3. Connect the FTDI USB serial cable
+3. Connect the FTDI USB serial cable (if this is connected before `pulseview` is started, then `pulseview` may try to claim the FTDI device)
 4. Open a serial terminal to the just created USB terminal at 9600 baud, 8n1.
 5. Press "RESET" button on the HHV SCA Demo board; text should appear on the terminal
 
