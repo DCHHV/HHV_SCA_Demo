@@ -4,5 +4,5 @@ This stage uses a properly balanced PIN check. When comparing each digit, the\r\
 same number of instructions occur for both correct and incorrect values. It is\r\n
 not possible to derive the PIN using a time SCA.\n\r\r
 It is still possible to derive the PIN for this stage. If you can demonstrate\r\n
-understanding of how to do this without brute force, we may have a special prize\r\n
+understanding of how to do this without brute force, we may have a prize\r\n
 for you!

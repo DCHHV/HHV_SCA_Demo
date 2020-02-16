@@ -5,7 +5,7 @@ separated by a comparison taking a non-zero amount of time. In this case,\r\n
 it is a 4 digit PIN of 4 values. This equates to (4^4)=256 combinations.\n\n\r
 To set up: connect the USBee logic analyzer to a computer, start the program\r\n
 "pulseview". Pulseview should show "USBee AX" in the middle of the icon bar.\r\n
-Select "Configure Channels", enable D0 & D1; select "16 MHz" & "500 G samples".\r\n
+Select "Configure Channels", enable D0 & D1; select "12 MHz" & "1 G samples".\r\n
 This results in ~60 s of acquisition time and ~1 GB of RAM consumption. To save\r\n
 RAM, lower the # of samples.\r\n\n
 More info and src can be found at github.com/DCHHV/HHV_SCA_Demo\r\n

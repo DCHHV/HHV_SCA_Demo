@@ -7,7 +7,7 @@ sequential correct digits.\r\n\n
 Pulseview is now to be used. Press "Run", enter PIN, press "Stop".\r\n
 Press "Show Cursors" to enable timing markers, measure the time between\r\n
 the last rising edge of D1 & the first falling edge of D0; note this time.\r\n
-Zoom in to this area to accurately set the markers, and see the time delta.\r\n
+Zoom in to this area to accurately set the markers and see the time delta.\r\n
 Repeat for each unique value of the first digit. One of the times\r\n
 noted will be longer than the others. This is the correct value of the first\r\n
 digit. Repeat this for each digit pos.\r\r\n

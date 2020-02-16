@@ -1,6 +1,6 @@
 stage_0_text
 Stage 0:\r\n
-This stage is very naive and is never used in practice. As soon as a digit is\r\n
+This stage's logic will never be used in practice. As soon as a digit is\r\n
 input (green LED flashes), it is checked. If the digit is incorrect, the\r\n
 check will fail, flash red, and return to waiting for the first digit.\n\n\r
 Repeat until the first value is found. Repeat for all 4 digits.\r\n
