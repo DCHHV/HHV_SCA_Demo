@@ -271,12 +271,6 @@ uint8_t adc_parse(void) {
 uint8_t kp_compare()
 {
     uint8_t i;
-    /*XXX: At the time of writing this, with xc8 2.05, ret doesn't always
-     * allow stage 2 to behave as we want. Sometimes, the codepath is the
-     * same amount of instructions no matter the amount of correct or incorrect
-     * digits in the PIN. Eventually, this should be moved to an ASM function
-     * so it can be properly tuned like stage 3.
-     */
     uint8_t ret = 1;
     
     switch(stage) {
@@ -287,10 +281,11 @@ uint8_t kp_compare()
         case 0:
             if (pin_input[pincnt-1] != pin[pincnt-1]) ret = 0;
             break;
+
         /* Stage 1 is a common naive password compare. Starting at one end, it
          * compares each place of the PIN with the expected value. At the first
          * incorrect value, the function returns.
-         * 
+         *
          * This allows one to identify the pin, place by place, in less than
          * 4+4+4+4 guesses.
          */
@@ -299,40 +294,52 @@ uint8_t kp_compare()
                 if (pin_input[i] != pin[i]) return 0;
             }
             break;
+
         /* Stage 2 is meant to be a naive fix to the above problem. A value is
          * set at the start of the loop. In this loop, every digit of the PIN
          * is compared against what is expected. If the digit is incorrect, then
          * the value is cleared and the PIN is incorrect.
-         * 
-         * While this does touch every place unlike above, the time is still
-         * different for a matching and non-matching place. This time difference
-         * allows one in effect to narrow in on how many correct and incorrect
+         *
+         * While this does compare each digit, unlike above, the time is still
+         * different for a matching and non-matching digit. This time difference
+         * allows one to narrow in on how many correct and incorrect
          * digits there are.
+         *
+         * Note that this architecture makes this specific scenario actually
+         * kind of difficult. Compilers optimized for speed with direct compare
+         * and jump instructions could opt to compare and jump if false, or
+         * compare, execute the next instruction 'ret = 0', and then jump. The
+         * idea here is that the paths of the if() statement are different
+         * lengths.
+         *
+         * A nop instruction was added below in order to ensure this function
+         * is broken in the intended way. The 'ret = 0' instruction is basically
+         * free with the way the PIC tests bit set/clr and skips instructions.
+         * Which causes the true and false paths to be equal in length.
+         * This behavior can be seen in the proper_compare() function.
          */
         case 2:
-            ret = 1;
             for (i = 0; i < pincnt; i++) {
                 if (pin_input[i] != pin[i]) {
                     ret = 0;
-                    asm("nop"); // Bandaid!
+                    asm("nop");
                 }
             }
             break;
+
         /* Stage 3 is a correct way to do PIN compare. It is hand tuned ASM
          * (see the function in compare.s) that checks every place, and whether
          * the digit matches or not, takes the same amount of time.
-         * 
+         *
          * The assembly will add 1 to a variable for every non-matching place.
-         * It will also busy delay if the place is matching so that it takes the
-         * same amount of time as it would adding 1 to the variable. At the end,
-         * a single compare against 0 is used. If that value was 0, it means all
-         * four places were correct. If it is nonzero, it means not all four
-         * places were correct.
-         * 
+         * At the end, a single compare against 0 is used. If that value was 0,
+         * it means all four places were correct. If it is nonzero, it means
+         * not all four places were correct.
+         *
          * Using this method and carefully understanding the critical time
          * sections, it is possible to create a routine that will leak no info
          * about how many digits were correct or incorrect.
-         * 
+         *
          * Stage 3, while implemented correctly, is readily defeated due to the
          * poor PRNG that drives the PIN generation.
          */
@@ -372,16 +379,10 @@ void generate_pin(void)
         seed_copy >>= 2;
     }
     pin[0] = seed_copy & 0x3;
-#if 0
-    pin[0] = ((seed >> 6) & 0x3);
-    pin[1] = ((seed >> 4) & 0x3);
-    pin[2] = ((seed >> 2) & 0x3);
-    pin[3] = ((seed) & 0x3);
-#endif
 }
 
 /* This function reads const char arrays from program flash. The program flash
- * of this PIC12F1572 uses 14-bit words. Two 7-bit ASCII charactes can fit in
+ * of this PIC12F1572 uses 14-bit words. Two 7-bit ASCII characters can fit in
  * each word.
  * 
  * The high byte is the first character, the low byte is the second. It is
@@ -427,12 +428,27 @@ void print_packed(const char *ptr)
     } while (buf);
 }
 
+/* Clear the terminal
+ * Uses VT100 commands to scroll the screen and put the cursor @ home.
+ * This helps to hide the "Seed:" output in the terminal and works on at least
+ * PuTTY and picocom.
+ */
+void clr_term(void) {
+    putch(0x1B);
+    putch('[');
+    putch('2');
+    putch('J');
+    putch(0x1B);
+    putch('[');
+    putch('H');
+}
+
 /* Cleans the terminal, prints the intro text for the next stage, and generates
  * the PIN for the next stage.
  */
 void print_stage(uint8_t stage)
 {
-    putch('\f');
+    clr_term();
     print_packed(stage_text[stage]);
     generate_pin();
 }
@@ -482,7 +498,7 @@ int main() {
      * two of them are technically repeated, and there will only ever be 255
      * PIN values as a PIN of 0000 will never happen.
      */
-    putch('\f');
+    clr_term();
     print_packed(intro_text);
     while(!newline_flag);
     newline_flag = 0;
