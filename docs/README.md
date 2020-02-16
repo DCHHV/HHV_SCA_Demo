@@ -1,7 +1,7 @@
 # Writeup
 **NOTE: This document contains spoilers! While the PIN for each stage is unique every time, this document discusses each stage in detail and how to derive its PIN. Do not proceed if you do not want hints.**
 
-The goal of each stage is to work out the correct PIN. Each stage has a unique 4 digit, 4 value PIN number that is randomly generated each reset of the whole device. As the player progresses through the stages they become increasingly difficult and more subtle. 
+The goal of each stage is to work out the correct PIN. Each stage has a unique 4 digit, 4 value PIN number that is randomly generated each reset of the whole device. As the player progresses through the stages they become increasingly difficult and more subtle.
 
 The following sections describe each stage of the demo; how to exploit the vulnerability, why the vulnerability exists, and eventually how to better mitigate against side-channel attacks. The information here is intended for educational purposes.
 
@@ -77,14 +77,14 @@ uint8_t kp_compare()
 		for (i = 0; i < pincnt; i++) {
 			if (pin_input[i] != pin[i]) {
 				ret = 0;
-				asm("nop"); // Bandaid!
+				asm("nop");
 			}
 		}
 	  ...
 }
 ```
 
-_Note: As indicated in the comments in the actual file, the xc8 2.05 compiler for PIC does not always do what we want for Stage 2. Sometimes, it outputs code that has a balanced code path, that is, for each correct or incorrect digit, the number of executed instructions are the same. The forced `nop` was inserted temporarily in order to overcome this. The correct fix is to implement this routine as an assembly function and properly tune each code path. The current .hex file in the github project root is tested to perform as expected._
+_Note: As indicated in the comments in `main.c`, the PIC architecture makes this specific scenario difficult to achieve. Without the `nop` instruction, the emitted code by the xc8 compiler is correctly balanced; it takes the same number of instructions for a matching and non-matching digit. The `nop` forces this extra instruction in this case. Other architectures and/or compilers optimized for execution speed rather than code size may output unbalanced code around this if() statement without the additional `nop` instruction. This highlights that not all code is perfectly portable. This code without the `nop` instruction might be balanced on this PIC, but when moved to a different microcontroller with a different compiler, that code may open up a vulnerability to SCA exploitation._
 
 The next important bit of information involves the PIC itself. The PIC12F1572 that is handling all of this, is running at a clock speed of 1 MHz. This specific series of devices has 4 clocks per every instruction executed. This means that the instructions are executed at a rate of 250 kHz, or one instruction every 4 μs. Note that some instructions take multiple instruction cycles; but for the purpose of this stage each path has a 1 instruction difference.
 
@@ -100,14 +100,14 @@ For example, with a PIN of \[REDACTED\]
 6. Repeat steps 1 through 5 with the PIN `1111`, `2222`, and `3333`
 7. Some logic and reasoning needs to be used here. With the above PINs, we gathered the following details:
 
-   `0000` Took 841 μs  
-   `1111` Took 841 μs  
-   `2222` Took 837 μs  
-   `3333` Took 845 μs  
+   `0000` Took 841 μs
+   `1111` Took 841 μs
+   `2222` Took 837 μs
+   `3333` Took 845 μs
 
    Note that `3333` took the longest, with at least two more incorrect digits than `2222`. This tells us that there are likely multiple `2`s in the final PIN, and likely no `3`s. But in order for us to continue, we need to eliminate one of the variables by resolving one of the digits. Let's repeat steps 1 through 5 with the following combinations.
 
-   `2000` Took 841 μs  
+   `2000` Took 841 μs
    `0200` Took 845 μs
 
    Stopping there, we see the difference between `0000` (see above) and `0200` is that `0200` is one instruction longer, meaning the `0` in the second place was correct, and replacing it with a `2` made that digit incorrect. We have just found our first digit, `x0xx`
@@ -157,26 +157,23 @@ stage_3_loop:
     ADDWF   _loop, W
     MOVWF   FSR0L
     CLRF    FSR0H
-    /* Load the address of pin+3 in to FSR0 */
+
+    /* Load the address of pin+3 in to FS10 */
     MOVLW   low _pin
     ADDWF   _loop, W
     MOVWF   FSR1L
     CLRF    FSR1H
 
+    /* Compare the two values via XOR. Z flag is set when they are equal */
     MOVF    INDF0, W;
     XORWF   INDF1, W;
 
     /* Start critical section */
-    BTFSS   STATUS, 2;          //2 cycles if Zero is set, 1 if not. Bit 2 is Z
-    GOTO    no_match;           //2 cycles always
-match:                          //From BTFSS, it takes 2 cycles to get here.
-    GOTO    check_loop;         //2 cycles always
-
-no_match:                       //From BTFSS, it takes 3 cycles to get here.
-    INCF    _cmp, F;            //1 cycle
+    BTFSS   STATUS, 2;          // 2 cycles if Zero is set, 1 if not. Bit 2 is Z
+    INCF    _cmp, F;            // 1 cycle.
     /* End critical section */
 
-check_loop:                     //From BTFSS, both paths take 4 cycles to here.
+check_loop:                     //From BTFSS, both paths take 2 cycles to here.
     CLRW;
     XORWF   _loop, W;
     BTFSC   STATUS, 2;          //2 cycles if true, 1 if false. Bit 2 is Z
@@ -189,7 +186,7 @@ check_loop:                     //From BTFSS, both paths take 4 cycles to here.
 
 Despite all of that however, Stage 3 is weak and the PIN can be derived through other means.
 
-When starting up the demo, the intro screen on the terminal talks about setup and other background information and asks you to press "Enter" to continue. In the background, a timer is running from the moment the PIC is released from internal reset. It is when "Enter" is pressed on the keyboard that this 8-bit timer is sampled and used as a seed value for all of the expected PINs. This seed is also printed in such a way that it is hidden on many serial terminals.
+When starting up the demo, the intro screen on the terminal talks about setup and other background information and asks you to press "Enter" to continue. In the background, a timer is running from the moment the PIC is released from internal reset. It is when "Enter" is pressed on the keyboard that this 8-bit timer is sampled and used as a seed value for all of the expected PINs. This seed is also printed in such a way that it is hidden on most serial terminals.
 
 From this seed, a PRNG using a Galois Linear Feedback Shift Register is used to transform it to the next step. The first transformation is used for Stage 0, it is transformed again for Stage 1, etc. Each stage only transforms the number one time. However, since the seed and each transformation of the PRNG is only 8-bits, it is a fairly weak PRNG that allows it to be easily discovered.
 
